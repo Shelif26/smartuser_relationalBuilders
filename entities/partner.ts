@@ -37,7 +37,7 @@ export class AS_Partner {
     onDelete: "CASCADE",
   })
   @JoinColumn({
-    name : "userid"
+    name: "userid",
   })
   user: AS_user;
   static AS_user: any;

@@ -5,29 +5,29 @@ const userPartnerResolver = {
     greet() {
       return AssociationService.greet();
     },
-    GetAllUsers() {
+    GetAllWizards() {
       return AssociationService.GetAllUsers();
     },
-    GetparticularUser(parent: any, args: any, context: any) {
+    GetWizardById(parent: any, args: any, context: any) {
       return AssociationService.GetparticularUser(args.id);
     },
-    GetUserByUUId(parent: any, args: any, context: any) {
+    GetWizardByUUId(parent: any, args: any, context: any) {
       return AssociationService.GetUserBYUUId(args.UUId);
     },
-    GetPartnerAssociationBYId(parent: any, args: any, context: any) {
+    GetLeadAssociationBYId(parent: any, args: any, context: any) {
       return AssociationService.GetPartnerAssociationBYId(args.id);
     },
-    GetUsersFromAG_group() {
-      return AssociationService.GetUsersFromAG_group();
+    GetAllMasterWizard() {
+      return AssociationService.GetMasterWizards();
     },
-    GetUsersFromBABA_group() {
-      return AssociationService.GetUsersFromBABA_group();
+    GetWizardsFromGriffindor() {
+      return AssociationService.GetWizardsFromGriffindor();
     },
-    GetUserByP_M16A4() {
-      return AssociationService.GetUserByP_M16A4();
+    GetWizardsFromSlytherin() {
+      return AssociationService.GetWizardsFromSlytherin();
     },
-    GetUserByP_M416() {
-      return AssociationService.GetUserByP_M416();
+    GetWizardsFromHufflePuff() {
+      return AssociationService.GetWizardsFromHafflePuff();
     },
   },
   Mutation: {

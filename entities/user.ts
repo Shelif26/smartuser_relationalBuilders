@@ -4,7 +4,8 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   CreateDateColumn,
-  DeleteDateColumn
+  DeleteDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { AS_Partner } from "./partner";
 
@@ -40,13 +41,53 @@ export class AS_user {
   })
   Mob_no: string;
 
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  Gender: string;
+
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  Street: string;
+
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  Area: string;
+
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  District: string;
+
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  State: string;
+
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  Country: string;
+
   @CreateDateColumn({ name: "created_timestamp", nullable: false })
   createdTimestamp?: Date;
 
+  @UpdateDateColumn({ name: "updated_timestamp", nullable: false })
+  updatedTimestamp?: Date;
+
   @DeleteDateColumn({
-    nullable:false
+    name: "softdeleted_timestamp",
+    nullable: false,
   })
-  DeleteDateColumn:Date
+  DeleteDateColumn?: Date;
 
   @OneToOne(() => AS_Partner, (Partner) => AS_Partner.AS_user, {
     onDelete: "CASCADE",

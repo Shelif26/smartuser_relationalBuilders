@@ -1,3 +1,3 @@
 import userPartnerResolver from "./association/resolver";
 
-export const resolvers = userPartnerResolver
+export const resolvers = userPartnerResolver;

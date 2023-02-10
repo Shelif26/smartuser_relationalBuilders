@@ -33,6 +33,6 @@ DBConnection.initialize()
     console.log(err);
   });
 
-app.listen(3000, () => {
-  console.log("Server connected at localhost :: 3000");
+app.listen(3003, () => {
+  console.log("Server connected at localhost :: 3003");
 });

@@ -1,10 +1,9 @@
 import { DBConnection } from "../resource/DataSource";
 import { AS_Partner } from "../entities/partner";
 import { AS_user } from "../entities/user";
-import { as_groups } from "../enums/association.AS_groups";
-import { BABA_Groups } from "../enums/association.BABA_group";
-import { M16A4 } from "../enums/association.M16A4";
-import { M416 } from "../enums/association.M416";
+import { Griffindor } from "../enums/association.Griffindor";
+import { Slytherin } from "../enums/association.Slytherin";
+import { HufflePuff } from "../enums/association.HufflePuff";
 
 const as_user = DBConnection.getRepository(AS_user);
 const as_partner = DBConnection.getRepository(AS_Partner);
@@ -22,8 +21,8 @@ class AssociationService {
     partner.user = create;
     await as_partner.save(partner);
     console.log(partner);
-
-    return `Great work ${partner.Partner} from ${partner.Association} you have successfully added ${create.FirstName} as your user Congrats!`;
+    console.log`${JSON.stringify(partner)}`;
+    return `Great work ${partner.Partner} from ${partner.Association} house, you have successfully added ${create.FirstName} ${create.SecondName} from ${create.Country} in TownHall Congrats!`;
   }
 
   public static async UpdateAS_user(
@@ -40,46 +39,39 @@ class AssociationService {
   ) {
     const update = await as_user
       .createQueryBuilder("AS_user")
-      .where("id=:ID", { ID: id })
-      .getOne();
-    if (!update) {
-      return `no data found this ID:${id}`;
-    }
-    const data = await as_user
-      .createQueryBuilder()
-      .update({
+      .update(AS_user)
+      .set({
         FirstName: input.FirstName,
         SecondName: input.SecondName,
         Email: input.Email,
         Mob_no: input.Mob_no,
       })
+      .where("id=:ID", { ID: id })
       .execute();
-    return `user with ID:${id} have update by replacing Name : ${update.FirstName} , Email : ${update.Email} , Mob_no : ${update.Mob_no}  `;
+    console.log`user have been updated : ${JSON.stringify(update)}`;
+    return `user with ID:${id} have updated with Name: ${input.FirstName} ${input.SecondName}, Email : ${input.Email} , Mob_no : ${input.Mob_no}  `;
   }
 
-  public static async AssociateNewPartnerForUserByUserId(userId:number,input:{
-    Association :any,
-    Partner : any, 
-    PartnerID : any ,
-  }){
+  public static async AssociateNewPartnerForUserByUserId(
+    userId: number,
+    input: {
+      Association: any;
+      Partner: any;
+      PartnerID: any;
+    }
+  ) {
     const update = await as_partner
       .createQueryBuilder("AS_Partner")
-      .where("userId=:ID", { ID: userId })
-      .getOne();
-      console.log("-------------fjsfzg-------------");
-      
-    if (!update) {
-      return `no data found this ID:${userId}`;
-    }
-    const data = await as_partner
-      .createQueryBuilder()
-      .update({
+      .update(AS_Partner)
+      .set({
         Association: input.Association,
         Partner: input.Partner,
         PartnerID: input.PartnerID,
       })
+      .where("userId=:ID", { ID: userId })
       .execute();
-    return `updated-------------> `;
+
+    return `User with ID : ${userId} have updated`;
   }
 
   public static async DeleteUserSoftBYId(id: number) {
@@ -88,6 +80,9 @@ class AssociationService {
       .softDelete()
       .where("id=:ID", { ID: id })
       .execute();
+    if (id != id) {
+      return `user with ID : ${id} doesn't exist`;
+    }
     return `user with ID : ${id} is have been soft deleted`;
   }
 
@@ -124,6 +119,7 @@ class AssociationService {
     if (id == user?.id) {
       return user;
     }
+    return `user with ID:${id} does not exist`;
   }
 
   public static async GetPartnerAssociationBYId(id: number) {
@@ -136,44 +132,42 @@ class AssociationService {
     return partner;
   }
 
-  public static async GetUsersFromAG_group() {
+  public static async GetWizardsFromGriffindor() {
     const AS_Group = await as_partner
       .createQueryBuilder("AS_Partner")
       .leftJoinAndSelect("AS_Partner.user", "user")
-      .setFindOptions({ where: { Association: as_groups.AS_Group } })
+      .setFindOptions({ where: { Association: Griffindor.Griffindor } })
       .getMany();
     console.log(AS_Group);
     return AS_Group;
   }
 
-  public static async GetUsersFromBABA_group() {
+  public static async GetWizardsFromSlytherin() {
     const BABA_Group = await as_partner
       .createQueryBuilder("AS_Partner")
       .leftJoinAndSelect("AS_Partner.user", "user")
-      .setFindOptions({ where: { Association: BABA_Groups.BABA_Group } })
+      .setFindOptions({ where: { Association: Slytherin.Slytherin } })
       .getMany();
     console.log(BABA_Group);
     return BABA_Group;
   }
 
-  public static async GetUserByP_M16A4() {
-    const P_M16A4 = await as_partner
+  public static async GetWizardsFromHafflePuff() {
+    const HafflePuff = await as_partner
       .createQueryBuilder("AS_Partner")
       .leftJoinAndSelect("AS_Partner.user", "user")
-      .setFindOptions({ where: { Partner: M16A4.m16a4 } })
+      .setFindOptions({ where: { Association: HufflePuff.HufflePuff } })
       .getMany();
-    console.log(P_M16A4);
-    return P_M16A4;
+    console.log(HafflePuff);
+    return HafflePuff;
   }
 
-  public static async GetUserByP_M416() {
-    const P_M416 = await as_partner
+  public static async GetMasterWizards() {
+    const masterwizard = await as_partner
       .createQueryBuilder("AS_Partner")
-      .leftJoinAndSelect("AS_Partner.user", "user")
-      .setFindOptions({ where: { Partner: M416.m416 } })
       .getMany();
-    console.log(P_M416);
-    return P_M416;
+    console.log(masterwizard);
+    return masterwizard;
   }
 
   public static async GetUserBYUUId(UUId: String) {

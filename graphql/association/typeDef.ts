@@ -8,7 +8,12 @@ type as_user{
     UUId : String
     Email : String
     Mob_no : String
-
+    Gender : String
+    Area : String
+    District : String
+    Street : String
+    State : String
+    Country : String
 }
 
 type as_partner {
@@ -25,6 +30,12 @@ input as_userinput{
     UUId : String
     Email : String
     Mob_no : String
+    Gender : String
+    Area : String
+    District : String
+    Street : String
+    State : String
+    Country : String
 }
 
 input as_userupdate{
@@ -32,6 +43,12 @@ input as_userupdate{
     SecondName : String
     Email : String
     Mob_no : String
+    Gender : String
+    Area : String
+    District : String
+    Street : String
+    State : String
+    Country : String
 }
 
 input as_partnerinput{
@@ -57,14 +74,13 @@ type Mutation{
 
 type Query {
     greet : String!
-    GetAllUsers : [as_partner]
-    GetparticularUser(id:Int) : as_user!
-    GetUserByUUId(UUId:String) : as_user!
-    GetPartnerAssociationBYId(id:Int) : as_partner!
-    GetUsersFromAG_group : [as_partner]
-    GetUsersFromBABA_group : [as_partner]
-    GetUserByP_M16A4: [as_partner]
-    GetUserByP_M416: [as_partner]
+    GetAllWizards : [as_partner]
+    GetAllMasterWizard : [as_partner]
+    GetWizardById(id:Int) : as_user!
+    GetWizardByUUId(UUId:String) : as_user!
+    GetLeadAssociationBYId(id:Int) : as_partner!
+    GetWizardsFromGriffindor : [as_partner]
+    GetWizardsFromSlytherin : [as_partner]
+    GetWizardsFromHufflePuff : [as_partner]
 }
-
 `;

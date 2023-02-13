@@ -17,6 +17,9 @@ const userPartnerResolver = {
     GetLeadAssociationBYId(parent: any, args: any, context: any) {
       return AssociationService.GetPartnerAssociationBYId(args.id);
     },
+    login(parent: any, args: any, context: any) {
+      return AssociationService.Authorization(args.Email, args.Mob_no);
+    },
     GetAllMasterWizard() {
       return AssociationService.GetMasterWizards();
     },
@@ -29,29 +32,35 @@ const userPartnerResolver = {
     GetWizardsFromHufflePuff() {
       return AssociationService.GetWizardsFromHafflePuff();
     },
+    GetWizardsFromRavenClow() {
+      return AssociationService.GetWizardsFromRavenClow();
+    },
   },
   Mutation: {
-    createPartnerUser(parent: any, args: any, context: any) {
+    createWizards(parent: any, args: any, context: any) {
       const user = args.user;
       const partner = args.partner;
       return AssociationService.createAS_userandAS_partner(user, partner);
     },
-    UpdateAS_user(parent: any, args: any, context: any) {
+    UpdateWizards(parent: any, args: any, context: any) {
       return AssociationService.UpdateAS_user(args.id, args.updateuser);
     },
-    changingPartnerForUser(parent: any, args: any, context: any) {
+    changingGrandWizardsForWizards(parent: any, args: any, context: any) {
       return AssociationService.AssociateNewPartnerForUserByUserId(
         args.userId,
         args.updatepartner
       );
     },
-    DeleteUserSoftBYId(parnet: any, args: any, context: any) {
+    ForgetPassword(parent: any, args: any, context: any) {
+      return AssociationService.ForgetPassword(args.Email, args.password);
+    },
+    DeleteWizardSoftBYId(parnet: any, args: any, context: any) {
       return AssociationService.DeleteUserSoftBYId(args.id);
     },
-    RestoreSoftDeleteUserBYId(parent: any, args: any, context: any) {
+    RestoreSoftDeleteWizardrBYId(parent: any, args: any, context: any) {
       return AssociationService.RestoreSoftDeleteUserBYId(args.id);
     },
-    DeleteUserPermanent(parent: any, args: any, context: any) {
+    DeleteWizardPermanent(parent: any, args: any, context: any) {
       return AssociationService.DeleteUserPermanent(args.id);
     },
   },

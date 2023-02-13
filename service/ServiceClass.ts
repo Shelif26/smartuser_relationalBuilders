@@ -4,6 +4,7 @@ import { AS_user } from "../entities/user";
 import { Griffindor } from "../enums/association.Griffindor";
 import { Slytherin } from "../enums/association.Slytherin";
 import { HufflePuff } from "../enums/association.HufflePuff";
+import { RavenClow } from "../enums/association.RavenClow";
 
 const as_user = DBConnection.getRepository(AS_user);
 const as_partner = DBConnection.getRepository(AS_Partner);
@@ -32,9 +33,12 @@ class AssociationService {
       SecondName: any;
       Email: any;
       Mob_no: any;
-      Association: any;
-      Partner: any;
-      PartnerID: any;
+      Gender: any;
+      Street: any;
+      Area: any;
+      District: any;
+      State: any;
+      Country: any;
     }
   ) {
     const update = await as_user
@@ -45,11 +49,30 @@ class AssociationService {
         SecondName: input.SecondName,
         Email: input.Email,
         Mob_no: input.Mob_no,
+        Gender: input.Gender,
+        Street: input.Street,
+        Area: input.Area,
+        State: input.State,
+        District: input.District,
+        Country: input.Country,
       })
       .where("id=:ID", { ID: id })
       .execute();
     console.log`user have been updated : ${JSON.stringify(update)}`;
     return `user with ID:${id} have updated with Name: ${input.FirstName} ${input.SecondName}, Email : ${input.Email} , Mob_no : ${input.Mob_no}  `;
+  }
+
+  public static async ForgetPassword(
+    Email: string,
+    input: { password: string }
+  ) {
+    const FP = await as_user
+      .createQueryBuilder("AS_user")
+      .update(AS_user)
+      .set({ FirstName: input.password })
+      .where("Email=:email", { email: Email })
+      .execute();
+    return FP;
   }
 
   public static async AssociateNewPartnerForUserByUserId(
@@ -152,6 +175,16 @@ class AssociationService {
     return BABA_Group;
   }
 
+  public static async GetWizardsFromRavenClow() {
+    const RV = await as_partner
+      .createQueryBuilder("AS_Partner")
+      .leftJoinAndSelect("AS_Partner.user", "user")
+      .setFindOptions({ where: { Association: RavenClow.RavenClow } })
+      .getMany();
+    console.log(RV);
+    return RV;
+  }
+
   public static async GetWizardsFromHafflePuff() {
     const HafflePuff = await as_partner
       .createQueryBuilder("AS_Partner")
@@ -177,6 +210,14 @@ class AssociationService {
       .getOne();
     console.log(UUId_);
     return UUId_;
+  }
+  public static async Authorization(Email: String, Mob_no: String) {
+    const auth = await as_user
+      .createQueryBuilder("AS_user")
+      .where("AS_user.Email = :email", { email: Email })
+      .andWhere("AS_user.Mob_no = :mob_no", { mob_no: Mob_no })
+      .getOne();
+    return `Hi good to see you again`;
   }
 }
 

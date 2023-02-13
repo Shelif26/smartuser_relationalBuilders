@@ -42,6 +42,12 @@ export class AS_user {
   Mob_no: string;
 
   @Column({
+    type : "varchar",
+    nullable : true
+  })
+  password : string
+
+  @Column({
     type: "varchar",
     nullable: true,
   })

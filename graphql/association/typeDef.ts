@@ -62,18 +62,25 @@ input as_partnerupdate{
     Partner : String
     PartnerID : String 
 }
+ 
+input forgetpassword{
+    Email : String
+    password : String
+}
 
 type Mutation{
-    createPartnerUser(user : as_userinput , partner : as_partnerinput) : String
-    UpdateAS_user(id:Int , updateuser : as_userupdate ) : String
-    changingPartnerForUser(userId : Int, updatepartner : as_partnerupdate) : String
-    DeleteUserSoftBYId(id:Int) : String!
-    RestoreSoftDeleteUserBYId(id:Int) : String!
-    DeleteUserPermanent(id:Int) : String!
+    createWizards(user : as_userinput , partner : as_partnerinput) : String
+    UpdateWizards(id:Int , updateuser : as_userupdate ) : String
+    changingGrandWizardsForWizards(userId : Int, updatepartner : as_partnerupdate) : String
+    ForgetPassword(Email : forgetpassword, password : forgetpassword) : String
+    DeleteWizardSoftBYId(id:Int) : String!
+    RestoreSoftDeleteWizardrBYId(id:Int) : String!
+    DeleteWizardPermanent(id:Int) : String!
 }
 
 type Query {
     greet : String!
+    login(Email:String, Mob_no:String) : as_user!
     GetAllWizards : [as_partner]
     GetAllMasterWizard : [as_partner]
     GetWizardById(id:Int) : as_user!
@@ -82,5 +89,6 @@ type Query {
     GetWizardsFromGriffindor : [as_partner]
     GetWizardsFromSlytherin : [as_partner]
     GetWizardsFromHufflePuff : [as_partner]
+    GetWizardsFromRavenClow :  [as_partner]
 }
 `;
